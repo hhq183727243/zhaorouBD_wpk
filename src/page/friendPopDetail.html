@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理系统</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/ace.min.css" />
+    <link rel="stylesheet" href="../css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="../css/weui.css" />
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+
+<body>
+	<section id="mainApp" v-cloak>
+		<header-cpt></header-cpt>
+
+		<leftnav-cpt :navigation="navigation"></leftnav-cpt>
+
+		<div class="mian">
+			<div class="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="icon-picture home-icon"></i>
+						<a href="javascript:history.go(-1)">返回列表</a>
+					</li>
+					<li class="active">详细</li>
+				</ul><!-- .breadcrumb -->
+			</div>
+
+			<div class="page-content">
+				<div class="page-header">
+					<h1>{{entity.goods_title}}</h1>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="profile-user-info-striped">
+							<info-cpt label="文案内容" :info="entity.content"></info-cpt>
+							
+							<div class="profile-info-row">
+								<div class="profile-info-name">营销图片</div>
+								<div class="profile-info-value">
+									<img height="200" :src="entity.market_image | imgFilter" alt=""/>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">晒图</div>
+								<div class="profile-info-value">
+									<ul class="ace-thumbnails clearfix">
+										<li v-for="(item,index) in entity.image">
+											<a class="cboxElement my-thumbnails" :style="'background-image:url(../' + item + ')'"></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">状态</div>
+								<div class="profile-info-value">
+									<span v-if="entity.status == 1" class="label label-success">已读</span>
+									<span v-else class="label label-danger">未读</span>
+									<a v-if="entity.status == 0"@click="updateStatus(entity.id,'status',1)">
+										标记为已读
+									</a>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">是否采纳</div>
+								<div class="profile-info-value">
+									<span v-if="entity.is_adopt == 1" class="label label-success">已采纳</span>
+									<span v-else class="label label-arrowed">未采纳</span>
+									<a @click="updateStatus(entity.id,'is_adopt',!entity.is_adopt)">
+										{{entity.is_adopt == 0 ? '采纳' : '取消采纳'}}
+									</a>
+								</div>
+							</div>
+
+							<info-cpt label="添加时间" :info="entity.create_time"></info-cpt>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-actions">
+					<a class="btn btn-info" :href="'555'">编辑</a>
+				</div>
+			</div>
+		</div>
+	</section>	
+</body>
+</html>

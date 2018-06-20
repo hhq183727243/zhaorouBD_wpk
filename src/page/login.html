@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录页面</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../css/font-awesome.min.css" />
+	<link rel="stylesheet" href="../css/ace.min.css" />
+	<link rel="stylesheet" href="../css/ace-rtl.min.css" />
+	<link rel="stylesheet" href="../css/weui.css" />
+	<link rel="stylesheet" href="../css/style.css"/>
+</head>
+
+<body class="login-layout">
+	<div class="main-content">
+		<div class="login-container">
+			<div class="center">
+				<h1><span class="white">登录系统</span></h1>
+				<h4 class="blue">&copy; Company Name</h4>
+			</div>
+
+			<div class="position-relative">
+				<div id="login-box" class="login-box visible widget-box no-border">
+					<div class="widget-body">
+						<div class="widget-main">
+							<h4 class="header blue lighter bigger">
+								<i class="icon-coffee green"></i>请输入登录信息
+							</h4>
+
+							<div class="space-6"></div>
+
+							<form id="loginVue">
+								<fieldset>
+									<label class="block clearfix">
+										<span class="block input-icon input-icon-right">
+											<input type="text" class="form-control" v-model="username" placeholder="Username" />
+											<i class="icon-user"></i>
+										</span>
+									</label>
+
+									<label class="block clearfix">
+										<span class="block input-icon input-icon-right">
+											<input type="password" class="form-control" v-model="password" placeholder="Password" />
+											<i class="icon-lock"></i>
+										</span>
+									</label>
+
+									<div class="space"></div>
+
+									<div class="clearfix">
+										<label class="inline">
+											<input type="checkbox" class="ace" />
+											<span class="lbl"> 记住账号</span>
+										</label>
+
+										<button type="button" @click="onLogin" class="width-35 pull-right btn btn-sm btn-primary">
+											<i class="icon-key"></i>登入
+										</button>
+									</div>
+
+									<div class="space-4"></div>
+								</fieldset>
+							</form>
+						</div><!-- /widget-main -->
+					</div><!-- /widget-body -->
+				</div><!-- /login-box -->
+			</div><!-- /position-relative -->
+		</div>
+	</div>
+</body>
+</html>

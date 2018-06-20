@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理系统</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/ace.min.css" />
+    <link rel="stylesheet" href="../css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="../css/weui.css" />
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+
+<body>
+	<section id="mainApp" v-cloak>
+		<header-cpt></header-cpt>
+
+		<leftnav-cpt :navigation="navigation"></leftnav-cpt>
+		
+		<div class="mian">
+			<div class="breadcrumbs" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="icon-picture home-icon"></i>
+						<a href="javascript:history.go(-1)">返回列表</a>
+					</li>
+					<li class="active">详细</li>
+				</ul><!-- .breadcrumb -->
+			</div>
+
+			<div class="page-content">
+				<div class="page-header">
+					<h1>{{entity.goods_title}}</h1>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="profile-user-info-striped">
+							<input-cpt label="文案内容" type="textarea" :rq="true" v-model="entity.content"></input-cpt>
+							
+							<div class="profile-info-row">
+								<div class="profile-info-name"><span class="required">*</span>营销图片</div>
+								<div class="profile-info-value">
+									<upload-cover-cpt :picture="'../' + entity.market_image" @upload="handleFileChange"></upload-cover-cpt>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name"><span class="required">*</span>晒图</div>
+								<div class="profile-info-value">
+									<ul class="ace-thumbnails clearfix">
+										<li v-for="(item,index) in entity.image">
+											<a class="cboxElement my-thumbnails" :style="'background-image:url(../' + item + ')'"></a>
+											<div class="tools tools-bottom">
+												<a href="javascript:void(0);" @click="deleteAttachment(index)">
+													<i class="icon-trash red"></i>删除
+												</a>
+											</div>
+										</li>
+									</ul>
+
+									<div>
+										<a class="btn btn-info btn-upload">上传图片
+											<input type="file" @change="uploadAttachment" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp" multiple />
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<!-- <div class="profile-info-row">
+								<div class="profile-info-name">状态</div>
+								<div class="profile-info-value">
+									<select v-model="entity.status">
+										<option value="1">标记已读</option>
+										<option value="0">标记未读</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">是否采纳</div>
+								<div class="profile-info-value">
+									<select v-model="entity.is_adopt">
+										<option value="1">采纳</option>
+										<option value="0">未采纳</option>
+									</select>
+								</div>
+							</div> 
+
+							<input-cpt label="添加时间" :info="entity.create_time"></input-cpt>-->
+						</div>
+					</div>
+				</div>
+
+				<div class="form-actions">
+					<button class="btn btn-info" type="button" @click="submitForm">保存</button>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
