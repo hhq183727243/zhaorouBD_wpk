@@ -186,10 +186,16 @@ module.exports = function(Vue){
 		props: ['navigation'],
 		template: `<div class="sidebar">
 			<ul class="nav nav-list">
-				<li :class="{'active': navigation == 'goods'}">
+				<li :class="{'active': navigation == 'dtk_goods'}">
 					<a href="/page/dtkGoodsList.html">
 						<i class="icon-bookmark"></i>
-						<span class="menu-text">商品文案管理</span>
+						<span class="menu-text">实时榜单文案管理</span>
+					</a>
+				</li>
+				<li :class="{'active': navigation == 'tkjd_goods'}">
+					<a href="/page/tkjdGoodsList.html">
+						<i class="icon-bookmark"></i>
+						<span class="menu-text">整站商品文案管理</span>
 					</a>
 				</li>
 				<li :class="{'active': navigation == 'user'}">

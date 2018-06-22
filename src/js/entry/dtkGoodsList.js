@@ -1,6 +1,11 @@
+/***
+ * 大淘客接口数据管理
+*/
 import Vue from "vue";//引入vue
 import vue_cpnt from '../vue.cpnt.js';//引入全局组件
 import init_list_app from '../vue-list.js';//引入全局组件
+const ajax = require('../server.js');
+const weui = require('../lib/weui.min.js');
 
 vue_cpnt(Vue);
 
@@ -15,7 +20,7 @@ init_list_app({
     },
     type: 0,
     data: {
-        navigation : 'goods',
+        navigation : 'dtk_goods',
         cid: 0,
         currentIndex: 0,
         classifyList: [{
@@ -72,13 +77,23 @@ init_list_app({
             this.cid = item.cid;
             
 			this.getList(1);
-		}
+        },
+        deleteEntity: function(item,index){
+			weui.confirm('确认屏蔽？',()=> {
+				ajax.getJSON('/api/del_dtk_goods?id=' + item.GoodsID,(res) => {
+					weui.toast('操作成功',1000);
+
+                    item.is_delete = 1
+				});
+			});
+        },
+        cancelDeleteEntity (item,index){
+            ajax.getJSON('/api/cancel_del_dtk_goods?id=' + item.GoodsID,(res) => {
+                weui.toast('操作成功',1000);
+
+                item.is_delete = 0
+            });
+        }
     },
-    searchUrl: 'production/list_keyword.do',
-    searchData: {
-        sellerId: '${sessionScope.defaultSeller.id}',
-        column1: 'production'
-    },
-    updateStatusUrl: '/api/upd_friendpop_status',
-    deleteUrl: '/api/del_friendpop'
+    deleteUrl: '/api/del_dtk_goods'
 },Vue);

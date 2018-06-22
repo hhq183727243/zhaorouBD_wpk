@@ -10,9 +10,12 @@ vue_cpnt(Vue);
 new Vue({
     el: '#mainApp',
     data: {
-        navigation : 'goods',
+        type: tool.getQueryString('type'),
+        navigation: tool.getQueryString('type') + '_goods',
         id: '',
-        entity: {}
+        entity: {
+
+        }
     },
     computed: {
         discountPrice: function () {

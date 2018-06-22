@@ -122,13 +122,13 @@ module.exports = function(options,Vue){
 
 			this.searchStatus = false;
 
-			this.load = weui.loading('加载中...');
+			window.load = weui.loading('加载中...');
 
 			ajax.postJSON(options.listUrl,postData,(res) => {
 				this.page = page;
 				this.pages = res.data.pages;
 				this.list = res.data.list;
-				this.load.hide();
+
 				$('.mian').animate({
 					scrollTop: 0
 				})

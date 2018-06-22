@@ -11,10 +11,11 @@ vue_cpnt(Vue);
 new Vue({
     el: '#mainApp',
     data: {
-        navigation : 'goods',
+        navigation : tool.getQueryString('type') + '_goods',
         id: '',
         goods_id: '',
         entity: {
+            type: tool.getQueryString('type'),
             id: '',
             goods_id: '',
             content: '',
@@ -64,7 +65,7 @@ new Vue({
         //更新状态
         submitForm: function(){
             this.validate(['entity.content','entity.market_image','entity.image'],() => {
-                this.entity.image = this.entity.image.join('#');
+                window.load = weui.loading('提交中...');
 
                 //更新
                 if(this.id != ''){

@@ -26,7 +26,8 @@
 				<ul class="breadcrumb">
 					<li>
 						<i class="icon-picture home-icon"></i>
-						<a href="/page/dtkGoodsList.html">商品管理</a>
+						<a v-if="type == 'dtk'" href="/page/dtkGoodsList.html">商品管理</a>
+						<a v-if="type == 'tkjd'" href="/page/tkjdGoodsList.html">商品管理</a>
 					</li>
 					<li class="active">列表</li>
 				</ul><!-- .breadcrumb -->
@@ -36,9 +37,9 @@
 				<div class="page-header">
 					<h1 class="fix">
 						<div class="l 500 ell" v-if="list.length > 0">
-							<a :href="'/page/dtkGoodsList.html'">{{list[0].goods_title}}</a>
+							{{list[0].goods_title}}
 						</div>
-						<a :href="'/page/friendPopUpdate.html?goods_id=' + goods_id" class="btn btn-success r">添加文案</a>
+						<a :href="'/page/friendPopUpdate.html?type=' + type + '&goods_id=' + goods_id" class="btn btn-success r">添加文案</a>
 					</h1>
 				</div>
 				
@@ -85,7 +86,7 @@
 							</td>
 							<td>{{item.create_time | dataFilter}}</td>
 							<td>
-								<a class="green" :href="'/page/friendPopDetail.html?id=' + item.id">
+								<a class="green" :href="'/page/friendPopDetail.html?type=' + type + '&id=' + item.id">
 									<i class="icon-pencil bigger-130"></i>查看详细
 								</a>
 								
@@ -93,7 +94,7 @@
 									<i class="icon-edit bigger-130"></i>{{item.is_adopt == 1 ? '取消' : '采纳'}}
 								</a>
 
-								<a class="green" :href="'/page/friendPopUpdate.html?id=' + item.id">
+								<a class="green" :href="'/page/friendPopUpdate.html?type=' + type + '&id=' + item.id">
 									<i class="icon-pencil bigger-130"></i>编辑
 								</a>
 

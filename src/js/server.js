@@ -57,6 +57,10 @@ module.exports = {
                         weui.alert(result.data);
                     }
                 }
+
+                if(!!window.load){
+                    window.load.hide();
+                }
               }
         });
     }
