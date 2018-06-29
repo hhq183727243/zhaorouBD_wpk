@@ -204,6 +204,12 @@ module.exports = function(Vue){
 						<span class="menu-text">用户管理</span>
 					</a>
 				</li>
+				<li :class="{'active': navigation == 'system_notice'}">
+					<a href="/page/systemNoticeList.html">
+						<i class="icon-bell-alt"></i>
+						<span class="menu-text">系统公告</span>
+					</a>
+				</li>
 			</ul>
 		</div>`,
 		data (){

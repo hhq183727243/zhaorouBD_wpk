@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理系统</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../css/font-awesome.min.css" />
+    <link rel="stylesheet" href="../css/ace.min.css" />
+    <link rel="stylesheet" href="../css/ace-rtl.min.css" />
+    <link rel="stylesheet" href="../css/weui.css" />
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+
+<body>
+	<section id="mainApp" v-cloak>
+		<header-cpt></header-cpt>
+
+		<leftnav-cpt :navigation="navigation"></leftnav-cpt>
+
+		<div class="mian">
+			<div class="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="icon-picture home-icon"></i>
+						<a href="/page/systemNoticeList.html">返回列表</a>
+					</li>
+					<li class="active">详细</li>
+				</ul><!-- .breadcrumb -->
+			</div>
+
+			<div class="page-content">
+				<div class="page-header">
+					<h1>{{entity.title}}</h1>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="profile-user-info-striped">
+							<info-cpt label="公告标题" :info="entity.title"></info-cpt>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">公告内容</div>
+								<div class="profile-info-value">
+									{{entity.content}}
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">状态</div>
+								<div class="profile-info-value">
+									<span v-if="entity.is_publish == 1" class="label label-success">已发布</span>
+									<span v-else class="label label-danger">未发布</span>
+								</div>
+							</div>
+
+                            <info-cpt v-if="entity.is_publish == 1" label="发布时间" :info="entity.publish_time"></info-cpt>
+                            
+							<info-cpt label="添加时间" :info="entity.create_time"></info-cpt>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-actions">
+					<a class="btn btn-info" :href="'/page/systemNoticeUpdate.html?id=' + entity.id">编辑</a>
+				</div>
+			</div>
+		</div>
+	</section>	
+</body>
+</html>
