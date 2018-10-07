@@ -3,9 +3,9 @@ const weui = require('./lib/weui.min.js');
 
 module.exports = function(options,Vue){
 	let data = {
+		res: {},
 		load: null,
-		type: options.type || '',//筛选列表数据条件
-		type2: options.type2 || '',//列表筛选条件，扩展项
+		type: '',//筛选列表数据条件
 		searchStatus: false,
 		keyword: '',
 		navigation: options.navigation || '',
@@ -129,6 +129,8 @@ module.exports = function(options,Vue){
 				this.pages = res.data.pages;
 				this.list = res.data.list;
 
+				this.res = res.data;
+				
 				$('.mian').animate({
 					scrollTop: 0
 				})

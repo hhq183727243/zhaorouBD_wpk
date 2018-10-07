@@ -6,13 +6,8 @@
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-	<link rel="stylesheet" href="../css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="../css/font-awesome.min.css" />
-	<link rel="stylesheet" href="../css/ace.min.css" />
-	<link rel="stylesheet" href="../css/ace-rtl.min.css" />
-	<link rel="stylesheet" href="../css/weui.css" />
-	<link rel="stylesheet" href="../css/style.css"/>
+	<link rel="stylesheet" href="http://www.xmadvance.com/cdn/bootstrap.min.css">
+	
 </head>
 
 <body class="login-layout">
@@ -38,24 +33,24 @@
 									<label class="block clearfix">
 										<span class="block input-icon input-icon-right">
 											<input type="text" class="form-control" v-model="username" placeholder="Username" />
-											<i class="icon-user"></i>
+											<i class="ace-icon icon-user"></i>
 										</span>
 									</label>
 
 									<label class="block clearfix">
 										<span class="block input-icon input-icon-right">
 											<input type="password" class="form-control" v-model="password" placeholder="Password" />
-											<i class="icon-lock"></i>
+											<i class="ace-icon icon-lock"></i>
 										</span>
 									</label>
 
 									<div class="space"></div>
 
 									<div class="clearfix">
-										<label class="inline">
+										<!-- <label class="inline">
 											<input type="checkbox" class="ace" />
 											<span class="lbl"> 记住账号</span>
-										</label>
+										</label> -->
 
 										<button type="button" @click="onLogin" class="width-35 pull-right btn btn-sm btn-primary">
 											<i class="icon-key"></i>登入

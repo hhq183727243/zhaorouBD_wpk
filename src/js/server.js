@@ -1,5 +1,24 @@
 const weui = require('./lib/weui.min.js');
 
+const css = [
+	//'../assets/css/bootstrap.min.css',
+	'http://www.xmadvance.com/cdn/ace.min.css',
+]
+
+const head = document.getElementsByTagName('head');
+
+css.forEach(item => {
+	let linkTag = document.createElement('link');
+
+	linkTag.rel = 'stylesheet';
+	linkTag.href = item;
+
+	//linkTag.integrity = 'sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u';
+	//linkTag.crossorigin = 'anonymous';
+
+	head[0].appendChild(linkTag);
+});
+
 module.exports = {
     getJSON: function(url,callback){
         $.ajax({
@@ -27,7 +46,18 @@ module.exports = {
                         weui.alert(result.data);
                     }
                 }
-              }
+
+                if(!!window.load){
+                    window.load.hide();
+                }
+            },
+            error: function(result){
+                if(!!window.load){
+                    window.load.hide();
+                }
+
+                weui.alert(result.data);
+            }
         });
     },
     postJSON: function(url,data,callback){
@@ -61,7 +91,14 @@ module.exports = {
                 if(!!window.load){
                     window.load.hide();
                 }
-              }
+            },
+            error: function(result){
+                if(!!window.load){
+                    window.load.hide();
+                }
+
+                weui.alert(result.data);
+            }
         });
     }
 }

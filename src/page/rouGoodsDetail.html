@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理系统</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="http://www.xmadvance.com/cdn/bootstrap.min.css">
+	
+</head>
+
+<body>
+	<section id="mainApp" v-cloak>
+		<header-cpt></header-cpt>
+
+		<leftnav-cpt :navigation="navigation"></leftnav-cpt>
+
+		<div class="mian">
+			<div class="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="icon-picture home-icon"></i>
+						<a href="/page/rouGoodsList.html">返回列表</a>
+					</li>
+					<li class="active">详细</li>
+				</ul><!-- .breadcrumb -->
+			</div>
+
+			<div class="page-content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="profile-user-info-striped">
+							<info-cpt label="商品类型" :info="goods_type"></info-cpt>
+							<div class="profile-info-row">
+								<div class="profile-info-name">营销图片</div>
+								<div class="profile-info-value">
+									<img height="150" :src="entity.market_pic | imgFilter" alt=""/>
+								</div>
+							</div>
+							<div class="profile-info-row">
+								<div class="profile-info-name">商品主图</div>
+								<div class="profile-info-value">
+									<img height="150" :src="entity.pic | imgFilter" alt=""/>
+								</div>
+							</div>
+							<info-cpt label="开始时间" :info="entity.start_time"></info-cpt>
+							<info-cpt v-if="entity.type == 2" label="直播时间" :info="entity.zhibo_time"></info-cpt>
+                            <info-cpt label="商品连接" :info="entity.goods_url"></info-cpt>
+							<info-cpt label="商品标题" :info="entity.goods_name"></info-cpt>
+							<info-cpt label="原价" :info="entity.price"></info-cpt>
+							<info-cpt label="券后价" :info="entity.price_after_coupons"></info-cpt>
+							<info-cpt label="佣金比例" :info="entity.rate"></info-cpt>
+							
+							<info-cpt label="优惠券连接" :info="entity.quan_link"></info-cpt>
+							<info-cpt label="优惠券金额" :info="entity.price_coupons"></info-cpt>
+							<info-cpt label="优惠券余量" :info="entity.quan_shengyu"></info-cpt>
+							<info-cpt label="券开始时间" :info="entity.coupon_start_time"></info-cpt>
+							<info-cpt label="券结束时间" :info="entity.coupon_end_time"></info-cpt>
+							<info-cpt label="默认文案" :info="entity.quan_guid_content"></info-cpt>
+							
+							<template v-if="entity.type == 2">
+								<div class="profile-info-row">
+									<div class="profile-info-name">预告图片</div>
+									<div class="profile-info-value">
+										<img height="120" :src="entity.yugao_pic | imgFilter" alt=""/>
+										<div>{{entity.yugao_introd}}</div>
+									</div>
+								</div>
+							</template>
+
+							<template v-if="entity.type == 2">
+								<div class="profile-info-row">
+									<div class="profile-info-name">直播文案一</div>
+									<div class="profile-info-value">
+										<img height="120" :src="entity.zhibo_pic1 | imgFilter" alt=""/>
+										<div>{{entity.zhibo_introd1}}</div>
+									</div>
+								</div>
+								<div class="profile-info-row">
+									<div class="profile-info-name">直播文案二</div>
+									<div class="profile-info-value">
+										<img height="120" :src="entity.zhibo_pic2 | imgFilter" alt=""/>
+										<div>{{entity.zhibo_introd2}}</div>
+									</div>
+								</div>
+								<div class="profile-info-row">
+									<div class="profile-info-name">直播文案三</div>
+									<div class="profile-info-value">
+										<img height="120" :src="entity.zhibo_pic3 | imgFilter" alt=""/>
+										<div>{{entity.zhibo_introd3}}</div>
+									</div>
+								</div>
+							</template>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">状态</div>
+								<div class="profile-info-value">
+									<span v-if="entity.status == 0" class="label label-danger">未审核</span>
+									<span v-if="entity.status == 1" class="label label-success">审核已通过</span>
+									<span v-if="entity.status == 2" class="label label-warning">审核未通过</span>
+									<span v-if="entity.status == 2">理由：{{entity.reject_reason || '未填写'}}</span>
+								</div>
+                            </div>
+                            
+                            <div class="profile-info-row" v-if="entity.status == 1">
+                                <div class="profile-info-name">是否发布</div>
+                                <div class="profile-info-value">
+                                    <span v-if="entity.is_publish == 0" class="label label-danger">未发布</span>
+                                    <span v-if="entity.is_publish == 1" class="label label-success">已发布</span>
+                                </div>
+                            </div>
+
+							<info-cpt label="提交用户" :info="entity.user_name"></info-cpt>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-actions">
+					<a v-if="entity.status == 0" class="btn btn-success" @click="updateField('status', 1)" href="javascript:void(0)">审核通过</a>
+					<a v-if="entity.status == 0" class="btn btn-danger" @click="updateField('status', 2)" href="javascript:void(0)">审核不通过</a>
+                    
+                    <a v-if="entity.status == 1 && entity.is_publish == 0" class="btn btn-success" @click="updateField('is_publish',1)" href="javascript:void(0)">发布</a>
+                    <a v-if="entity.status == 1 && entity.is_publish == 1" class="btn btn-danger" @click="updateField('is_publish',0)" href="javascript:void(0)">取消发布</a>
+                    
+                    <a class="btn btn-info" :href="'/page/rouGoodsUpdate.html?id=' + entity.id">编辑</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="mask" v-show="rejectLayer">
+			<div class="layer">
+				<div class="label-t">拒绝理由</div>
+				<div class="label-b">
+					<textarea v-model="reject_reason" class="pct100" rows="5"></textarea>
+				</div>
+				<div class="label-f">
+					<a class="btn btn-danger" @click="rejectLayer = false">取消</a>
+					<a class="btn btn-success" @click="onReject">提交</a>
+				</div>
+			</div>
+		</div>
+	</section>	
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理系统</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="http://www.xmadvance.com/cdn/bootstrap.min.css">
+	
+</head>
+
+<body>
+	<section id="mainApp" v-cloak>
+		<header-cpt></header-cpt>
+
+		<leftnav-cpt :navigation="navigation"></leftnav-cpt>
+		
+		<div class="mian">
+			<div class="breadcrumbs" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="icon-picture home-icon"></i>
+						<a href="/page/userList.html">返回列表</a>
+					</li>
+					<li class="active">{{id == '' ? '添加' : '更新'}}</li>
+				</ul><!-- .breadcrumb -->
+            </div>
+            
+            <div class="page-header" v-if="parentEntity != null">
+                <h1 class="fix">添加【{{parentEntity.nickname}}】的子账号</h1>
+            </div>
+
+			<div class="page-content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="profile-user-info-striped">
+                            <div class="profile-info-row" v-if="parentEntity != null">
+                                <div class="profile-info-name">头像</div>
+                                <div class="profile-info-value">
+                                    <upload-cover-cpt :picture="'/' + entity.headimgurl" @upload="handleFileChange"></upload-cover-cpt>
+                                </div>
+                            </div>
+
+							<input-cpt label="昵称" v-model="entity.nickname"></input-cpt>
+							<input-cpt label="登录账号" v-model="entity.telephone"></input-cpt>
+                            
+                            <input-cpt label="登录密码" v-model="entity.password"></input-cpt>
+                            <input-cpt label="PID" v-model="entity.pid"></input-cpt>
+                            <input-cpt v-if="entity.parent_unionid == 0" label="淘session" v-model="entity.tao_session"></input-cpt>
+                            <input-cpt type="number" label="积分" v-model="entity.score"></input-cpt>
+                        </div>
+
+                        <p class="mt10 red">注：只有同时设置账号和密码时才可以使用账号登录。</p>
+					</div>
+				</div>
+
+				<div class="form-actions">
+					<button class="btn btn-info" type="button" @click="submitForm">保存</button>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

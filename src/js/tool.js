@@ -1,10 +1,24 @@
+
 const tool = {
-    getQueryString (name) { 
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
-        var r = window.location.search.substr(1).match(reg); 
-        if (r != null) return unescape(r[2]); 
-        return null; 
-    } 
+    getQueryString (name,url) { 
+        var search = url || document.location.search;
+        //alert(search);
+        var pattern = new RegExp("[?&]" + name + "\=([^&]+)", "g");
+        var matcher = pattern.exec(search);
+        var items = null;
+        if (null != matcher) {
+            try {
+                items = decodeURIComponent(decodeURIComponent(matcher[1]));
+            } catch (e) {
+                try {
+                    items = decodeURIComponent(matcher[1]);
+                } catch (e) {
+                    items = matcher[1];
+                }
+            }
+        }
+        return items;
+    }
 }
 
 module.exports = tool;

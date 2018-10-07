@@ -1,6 +1,5 @@
 import Vue from "vue";//引入vue
 import vue_cpnt from '../vue.cpnt.js';//引入全局组件
-import init_list_app from '../vue-list.js';//引入全局组件
 import tool from '../tool.js';//工具包
 import ajax from '../server';
 const weui = require('../lib/weui.min.js');
@@ -30,10 +29,19 @@ new Vue({
         }
     },
     methods: {
+        toUnicodeFun (data){
+            if(data == '' || typeof data == 'undefined') return '请输入汉字';
+            let str =''; 
+            
+            for(let i = 0;i < data.length;i++){
+                str+="\\u"+data.charCodeAt(i).toString(16);
+            }
+            
+            return str;
+        },
         getDetail: function(){
             ajax.getJSON(`/api/get_friendpop_detail?id=${this.id}`,(res) => {
                 this.entity = res.data.entity;
-
                 this.entity.image = !this.entity.image ? [] : this.entity.image.split('#');
             });
         },

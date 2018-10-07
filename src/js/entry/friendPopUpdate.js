@@ -15,6 +15,7 @@ new Vue({
         id: '',
         goods_id: '',
         entity: {
+            key_id: tool.getQueryString('key_id'),
             type: tool.getQueryString('type'),
             id: '',
             goods_id: '',

@@ -7,6 +7,7 @@ vue_cpnt(Vue);
 
 init_list_app({
     data: {
+        key_id: tool.getQueryString('key_id'),
         type: tool.getQueryString('type'),
         goods_id: tool.getQueryString('goods_id'),
         navigation : tool.getQueryString('type') + '_goods'
@@ -14,6 +15,12 @@ init_list_app({
     sortField: 'displayIndex',//默认排序
     listUrl: '/api/get_friendpop_list',
     listData: {
+        key_id (){
+            return tool.getQueryString('key_id');
+        },
+        type (){
+            return this.type;
+        },
         goods_id (){
             return tool.getQueryString('goods_id');
         }

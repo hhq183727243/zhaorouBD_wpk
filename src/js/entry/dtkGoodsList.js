@@ -80,7 +80,7 @@ init_list_app({
         },
         deleteEntity: function(item,index){
 			weui.confirm('确认屏蔽？',()=> {
-				ajax.getJSON('/api/del_dtk_goods?id=' + item.GoodsID,(res) => {
+				ajax.getJSON('/api/del_dtk_goods?id=' + item.goods_id,(res) => {
 					weui.toast('操作成功',1000);
 
                     item.is_delete = 1
@@ -88,7 +88,7 @@ init_list_app({
 			});
         },
         cancelDeleteEntity (item,index){
-            ajax.getJSON('/api/cancel_del_dtk_goods?id=' + item.GoodsID,(res) => {
+            ajax.getJSON('/api/cancel_del_dtk_goods?id=' + item.goods_id,(res) => {
                 weui.toast('操作成功',1000);
 
                 item.is_delete = 0

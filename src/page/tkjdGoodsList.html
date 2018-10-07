@@ -5,13 +5,9 @@
 	<title>后台管理系统</title>
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="../css/font-awesome.min.css" />
-    <link rel="stylesheet" href="../css/ace.min.css" />
-    <link rel="stylesheet" href="../css/ace-rtl.min.css" />
-    <link rel="stylesheet" href="../css/weui.css" />
-    <link rel="stylesheet" href="../css/style.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="http://www.xmadvance.com/cdn/bootstrap.min.css">
+	
 	<!-- basic -->
 </head>
 
@@ -65,6 +61,7 @@
 												<span class="lbl"></span>
 											</label>
 										</th> -->
+										<th>商品图片</th>
 										<th>商品标题</th>
 										<th>原价</th>
 										<th>券后价</th>
@@ -84,7 +81,8 @@
 												<span class="lbl"></span>
 											</label>
 										</td> -->
-										<td><a style="width: 300px;" class="db ell" target="_blank" :href="'https://detail.tmall.com/item.htm?id=' + item.goods_id">{{item.goods_name}}</a></td>
+										<td><img class="ovh" height="80" width="80" :src="item.pic + '_430x430q90.jpg'"/></td>
+										<td><a style="width: 250px;" class="db ell" target="_blank" :href="'https://detail.tmall.com/item.htm?id=' + item.goods_id">{{item.goods_name}}</a></td>
 										<td><del>{{item.price}}</del></td>
 										<td>{{item.price_after_coupons}}</td>
 										<td>{{item.sales}}</td>
@@ -93,7 +91,7 @@
 											<span v-if="item.is_friendpop == 1" class="label label-success">已完善</span>
 											<span v-if="item.is_friendpop == 0" class="label label-danger">未完善</span>
 										</td>
-										<td><a target="_blank" :href="'/page/friendPopList.html?type=tkjd&goods_id=' + item.goods_id">文案管理（{{item.total_friendpop_num}}）</a>
+										<td><a target="_blank" :href="'/page/friendPopList.html?type=tkjd&goods_id=' + item.goods_id + '&key_id=' + item.id">文案管理（{{item.total_friendpop_num}}）</a>
 											<span class="badge badge-important" v-if="item.new_friendpop_num > 0">+{{item.new_friendpop_num}}</span></td>
 										<!-- <td>
 											<a class="green" :href="'/page/dtkGoodsDetail.html?goods_id=' + item.goods_id">

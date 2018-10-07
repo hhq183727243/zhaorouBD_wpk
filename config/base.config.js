@@ -12,6 +12,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //引入path
 const path = require('path'); 
 
+//require('font-awesome-webpack');
+
 const publictPath = '../src/js/entry/';
 
 //遍历入口文件
@@ -52,10 +54,12 @@ const devMode = process.env.NODE_ENV !== 'production'
 
 console.log(`======================${devMode}=====================`);
 
+const output_path = devMode ? path.join('E:/Project/zhaorouBD/','/static/') : path.resolve(__dirname,'../dist/');
+
 module.exports = {
     entry: entry_file,
     output: {
-        path: path.resolve('__dirname','../dist/'),//打包后的文件存放的地方。公共路径，该路径也是css、html打包后的相对路径
+        path: output_path,//打包后的文件存放的地方。公共路径，该路径也是css、html打包后的相对路径
         //publicPath: 'js/',//配置相对路径
         filename: 'js/[name].bundle.js?temp=[hash]'//打包后输出文件的文件名
     },
@@ -75,7 +79,12 @@ module.exports = {
             test: /\.css$/,
             use: [
                 MiniCssExtractPlugin.loader,
-                "css-loader"
+                {
+                    loader: 'css-loader',
+                    options:{
+                        minimize: true //css压缩
+                    }
+                }
             ]
         },{
             test: /\.(png|jpg|gif)$/,
@@ -86,12 +95,21 @@ module.exports = {
                 outputPath: './img',
                 publicPath: '../img'
             }
+        },
+        // font-awesome
+        {
+            test: /\.(eot|svg|ttf|woff|woff2)\w*/,
+            loader: 'file-loader',
+            options: {
+                publicPath: '../font/',
+                name: '[name].[ext]'
+            }
         }]
     },
     optimization: {
         splitChunks: {
             chunks: 'all',
-            minSize: 30000,
+            minSize: 3000,
             minChunks: 3,//该参数好像不起作用，配置1-10都可以提取出公共代码块
             maxAsyncRequests: 5,
             maxInitialRequests: 5,
@@ -107,7 +125,7 @@ module.exports = {
                     minChunks: 3,//最少几个模块引入才抽取公共代码
                     name: 'common_style',
                     test: /\.css$/,
-                    chunks: 'all',
+                    chunks: 'async',
                     enforce: true
                 },
                 vendors: {

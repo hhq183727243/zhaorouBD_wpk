@@ -38,7 +38,7 @@ module.exports = function(Vue){
 	});
 
 	Vue.filter('imgFilter', function(value) {   
-		if(value == undefined || value == '' || value == null || value.indexOf('http') > -1){
+		if(!!!value || value.indexOf('http') > -1){
 			return value;
 		}
 
@@ -103,7 +103,6 @@ module.exports = function(Vue){
 								</span>
 								<i class="icon-caret-down"></i>
 							</a>
-		
 							<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
 									<a href="javascript:void(0);" @click="updPassword">
@@ -184,7 +183,7 @@ module.exports = function(Vue){
 
 	Vue.component('leftnav-cpt',{
 		props: ['navigation'],
-		template: `<div class="sidebar">
+		template: `<div class="sidebar no-skin">
 			<ul class="nav nav-list">
 				<li :class="{'active': navigation == 'dtk_goods'}">
 					<a href="/page/dtkGoodsList.html">
@@ -196,6 +195,12 @@ module.exports = function(Vue){
 					<a href="/page/tkjdGoodsList.html">
 						<i class="icon-bookmark"></i>
 						<span class="menu-text">整站商品文案管理</span>
+					</a>
+				</li>
+				<li :class="{'active': navigation == 'rou_goods'}">
+					<a href="/page/rouGoodsList.html">
+						<i class="icon-bookmark"></i>
+						<span class="menu-text">肉单管理</span>
 					</a>
 				</li>
 				<li :class="{'active': navigation == 'user'}">
@@ -331,10 +336,14 @@ module.exports = function(Vue){
 			'<ul class="pagination">' + 
 				'<li :class="{disabled : current === 1}"><a @click="changePage(1)" :href="href">首页</a></li>' +
 				'<li :class="{disabled : current === 1}"><a @click="changePage(current - 1)" :href="href">上一页</a></li>' +
-				'<template v-for="n in pages > 10 ? 10 : pages">' +
+				'<template v-if="pages > 10" v-for="n in 10">' +
 				'<li v-if="current > 5 &&　current <= pages - 5"><a @click="changePage(n + current - 5)" :class="{current_page : current === n + current - 5}" :href="href">{{n + current - 5}}</a></li>' +
 				'<li v-if="current > 5 &&　current > pages - 5"><a @click="changePage(n + pages - 10)" :class="{current_page : current === n + pages - 10}" :href="href">{{n + pages - 10}}</a></li>' +
 				'<li v-if="current <= 5"><a @click="changePage(n)" :class="{current_page : current === n}" :href="href">{{n}}</a></li>' +
+				'</template>'+
+
+				'<template v-if="pages <= 10" v-for="n in pages">' +
+				'<li><a @click="changePage(n)" :class="{current_page : current === n}" :href="href">{{n}}</a></li>' +
 				'</template>'+
 
 				'<li :class="{disabled : current === pages}"><a @click="changePage(current + 1)" :href="href">下一页</a></li>' +
@@ -374,7 +383,7 @@ module.exports = function(Vue){
 			},
 			max: { 
 				type: Number,
-				default: 100
+				default: 200
 			},
 		},
 		template: '<div class="profile-info-row">' +
@@ -466,6 +475,7 @@ module.exports = function(Vue){
 	//上传封面组件
 	Vue.component('upload-cover-cpt',{
 		props: {
+			flag: '',
 			picture: {},
 			btnText: {
 				default: '上传图片'
@@ -473,7 +483,7 @@ module.exports = function(Vue){
 		},
 		template: '<div>' +
 			'<span class="profile-picture">' +
-				'<img width="180" class="editable img-responsive" :src="picture || defaultPicture">' +
+				'<img width="120" class="editable img-responsive" :src="picture || defaultPicture">' +
 			'</span>' +
 			'<div><a class="btn btn-info btn-upload">{{btnText}}<input @change="handleFileChange" type="file" accept="image/gif,image/jpeg,image/png,image/jpg,image/bmp"/></a></div>' +
 		'</div>',
@@ -483,9 +493,9 @@ module.exports = function(Vue){
 			}
 		},
 		methods: {
-			handleFileChange: function (value) {
+			handleFileChange: function (e) {
 				// 通过 input 事件带出数值
-				this.$emit('upload',value);
+				this.$emit('upload',e,this.flag);
 			}
 		}
 	})

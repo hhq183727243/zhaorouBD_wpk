@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>后台管理系统</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="stylesheet" href="http://www.xmadvance.com/cdn/bootstrap.min.css">
+	<!--  -->
+</head>
+
+<body>
+	<section id="mainApp" v-cloak>
+		<header-cpt></header-cpt>
+
+		<leftnav-cpt :navigation="navigation"></leftnav-cpt>
+		
+		<div class="mian">
+			<div class="breadcrumbs" id="breadcrumbs">
+				<ul class="breadcrumb">
+					<li>
+						<i class="icon-picture home-icon"></i>
+						<a href="rouGoodsList.html">返回列表</a>
+					</li>
+					<li class="active">详细</li>
+				</ul><!-- .breadcrumb -->
+			</div>
+
+			<div class="page-content">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="profile-user-info-striped">
+							<div class="profile-info-row">
+								<div class="profile-info-name"><span class="required">*</span>商品类型</div>
+								<div class="profile-info-value">
+									<label>
+										<input name="type" value="1" v-model="entity.type" type="radio" class="ace">
+										<span class="lbl">普通商品</span>
+									</label>
+									<label class="ml10">
+										<input name="type" value="2" v-model="entity.type" type="radio" class="ace">
+										<span class="lbl">预告肉单</span>
+									</label>
+									<label class="ml10">
+										<input name="type" value="3" v-model="entity.type" type="radio" class="ace">
+										<span class="lbl">常规肉单</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name"><span class="required">*</span>开始时间</div>
+								<div class="profile-info-value">
+									<input style="width: 200px;" id="startTime" readonly type="text"/>
+								</div>
+							</div>
+
+							<template v-if="entity.type == 2">
+								<div class="profile-info-row">
+									<div class="profile-info-name"><span class="required">*</span>预告图片</div>
+									<div class="profile-info-value">
+										<upload-cover-cpt :picture="'../' + entity.yugao_pic" :flag="'yugao_pic'" @upload="handleFileChange"></upload-cover-cpt>
+									</div>
+								</div>
+
+								<input-cpt label="预告文案" type="textarea" :rq="true" v-model="entity.yugao_introd"></input-cpt>
+							</template>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name"><span class="required">*</span>商品分类</div>
+								<div class="profile-info-value">
+									<select v-model="entity.cid">
+										<option :value="item.id" v-for="item in classList">{{item.classname}}</option>
+									</select>
+								</div>
+							</div>
+
+							<input-cpt v-if="id == null" label="商品连接" type="text" :rq="true" v-model="entity.goods_url"></input-cpt>
+							<info-cpt v-else label="商品连接" type="text" :info="entity.goods_url"></info-cpt>
+
+							<input-cpt label="商品标题" type="text" :rq="true" v-model="entity.goods_name"></input-cpt>
+							<input-cpt label="原价" type="number" :rq="true" v-model="entity.price"></input-cpt>
+							<input-cpt label="券后价" type="number" :rq="true" v-model="entity.price_after_coupons"></input-cpt>
+							<input-cpt label="佣金比例" type="number" :rq="true" v-model="entity.rate"></input-cpt>
+							
+							<input-cpt label="优惠券连接" type="text" :rq="true" v-model="entity.quan_link"></input-cpt>
+							
+							<!-- <input-cpt label="优惠券金额" type="text" :rq="true" v-model="entity.price_coupons"></input-cpt> -->
+							<!-- <input-cpt label="优惠券余量" type="text" :rq="true" v-model="entity.quan_shengyu"></input-cpt> -->
+
+							<input-cpt label="默认文案" type="textarea" :rq="true" v-model="entity.quan_guid_content"></input-cpt>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name"><span class="required">*</span>营销图片</div>
+								<div class="profile-info-value">
+									<upload-cover-cpt :picture="'../' + entity.market_pic" :flag="'market_pic'" @upload="handleFileChange"></upload-cover-cpt>
+								</div>
+							</div>
+							
+							<div class="profile-info-row">
+								<div class="profile-info-name"><span class="required">*</span>商品图片</div>
+								<div class="profile-info-value">
+									<upload-cover-cpt :picture="'../' + entity.pic" :flag="'pic'" @upload="handleFileChange"></upload-cover-cpt>
+								</div>
+							</div>
+
+							<template v-if="entity.type != 1">
+								<div class="profile-info-row">
+									<div class="profile-info-name"><span class="required">*</span>图文直播一</div>
+									<div class="profile-info-value weui-flex">
+										<upload-cover-cpt :picture="'../' + entity.zhibo_pic1" :flag="'zhibo_pic1'" @upload="handleFileChange"></upload-cover-cpt>
+										<div class="ml20">
+											<textarea v-model="entity.zhibo_introd1" cols="90" rows="10" placeholder="直播文案"></textarea>
+										</div>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"><span class="required">*</span>图文直播二</div>
+									<div class="profile-info-value weui-flex">
+										<upload-cover-cpt :picture="'../' + entity.zhibo_pic2" :flag="'zhibo_pic2'" @upload="handleFileChange"></upload-cover-cpt>
+										<div class="ml20">
+											<textarea v-model="entity.zhibo_introd2" cols="90" rows="10" placeholder="直播文案"></textarea>
+										</div>
+									</div>
+								</div>
+
+								<div class="profile-info-row">
+									<div class="profile-info-name"><span class="required">*</span>图文直播三</div>
+									<div class="profile-info-value weui-flex">
+										<upload-cover-cpt :picture="'../' + entity.zhibo_pic3" :flag="'zhibo_pic3'" @upload="handleFileChange"></upload-cover-cpt>
+										<div class="ml20">
+											<textarea v-model="entity.zhibo_introd3" cols="90" rows="10" placeholder="直播文案"></textarea>
+										</div>
+									</div>
+								</div>
+							</template>
+
+							<div class="profile-info-row" v-show="entity.type == 2">
+								<div class="profile-info-name"><span class="required">*</span>直播时间</div>
+								<div class="profile-info-value">
+									<input style="width: 200px;" id="zhibo_time" readonly type="text"/>
+									<select v-model="time">
+										<option :value="item + ':00'" v-for="item in timeList">{{item}}</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-actions">
+					<button class="btn btn-info" type="button" @click="submitForm">保存</button>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
